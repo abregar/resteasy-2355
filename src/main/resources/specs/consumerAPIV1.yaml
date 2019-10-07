@@ -1,0 +1,61 @@
+openapi: "3.0.2"
+info:
+  version: "1"
+  title: Swagger Petstore
+  license:
+    name: MIT
+servers:
+  - url: http://localhost
+paths:
+  /v1/pets/{petId}:
+    get:
+      summary: Info for a specific pet
+      operationId: showPetByIdV1
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetV1"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    PetV1:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        tag:
+          type: string
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
